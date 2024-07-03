@@ -60,3 +60,16 @@ export const register = async (formData: RegisterFormData) => {
     }
   };
   
+  export const addMyAppartment = async (appartmentFormData: FormData) => {
+    const response = await fetch(`${API_BASE_URL}/api/my-appartments`, {
+      method: "POST",
+      credentials: "include",
+      body: appartmentFormData,
+    });
+  
+    if (!response.ok) {
+      throw new Error("Failed to add appartment");
+    }
+  
+    return response.json();
+  };

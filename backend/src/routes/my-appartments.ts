@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import multer from "multer";
-// import cloudinary from "cloudinary";
+import cloudinary from "cloudinary";
 import Appartment from "../models/appartment";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
@@ -24,7 +24,7 @@ router.post(
     body("city").notEmpty().withMessage("City is required"),
     body("country").notEmpty().withMessage("Country is required"),
     body("description").notEmpty().withMessage("Description is required"),
-    body("type").notEmpty().withMessage("Hotel type is required"),
+    body("type").notEmpty().withMessage("Appartment type is required"),
     body("pricePerNight")
       .notEmpty()
       .isNumeric()
@@ -40,9 +40,9 @@ router.post(
       const imageFiles = req.files as Express.Multer.File[];
       const newAppartment: AppartmentType = req.body;
 
-      // const imageUrls = await uploadImages(imageFiles);
+       const imageUrls = await uploadImages(imageFiles);
 
-      // newAppartment.imageUrls = imageUrls;
+       newAppartment.imageUrls = imageUrls;
       newAppartment.lastUpdated = new Date();
       newAppartment.userId = req.userId;
 
@@ -62,7 +62,7 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
     const appartment = await Appartment.find({ userId: req.userId });
     res.json(appartment);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching hotels" });
+    res.status(500).json({ message: "Error fetching appartments" });
   }
 });
 
@@ -75,7 +75,7 @@ router.get("/:id", verifyToken, async (req: Request, res: Response) => {
     });
     res.json(appartment);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching hotels" });
+    res.status(500).json({ message: "Error fetching appartment" });
   }
 });
 
@@ -102,10 +102,10 @@ router.put(
       }
 
       const files = req.files as Express.Multer.File[];
-      // const updatedImageUrls = await uploadImages(files);
+       const updatedImageUrls = await uploadImages(files);
 
       appartment.imageUrls = [
-        // ...updatedImageUrls,
+        ...updatedImageUrls,
         ...(updatedAppartment.imageUrls || []),
       ];
 
@@ -118,16 +118,16 @@ router.put(
   }
 );
 
-// async function uploadImages(imageFiles: Express.Multer.File[]) {
-//   const uploadPromises = imageFiles.map(async (image) => {
-//     const b64 = Buffer.from(image.buffer).toString("base64");
-//     let dataURI = "data:" + image.mimetype + ";base64," + b64;
-//     const res = await cloudinary.v2.uploader.upload(dataURI);
-//     return res.url;
-//   });
+async function uploadImages(imageFiles: Express.Multer.File[]) {
+  const uploadPromises = imageFiles.map(async (image) => {
+    const b64 = Buffer.from(image.buffer).toString("base64");
+    let dataURI = "data:" + image.mimetype + ";base64," + b64;
+    const res = await cloudinary.v2.uploader.upload(dataURI);
+    return res.url;
+  });
 
-//   const imageUrls = await Promise.all(uploadPromises);
-//   return imageUrls;
-// }
+  const imageUrls = await Promise.all(uploadPromises);
+  return imageUrls;
+}
 
 export default router;
