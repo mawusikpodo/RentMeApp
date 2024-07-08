@@ -16,13 +16,13 @@ const Header = () => {
             <>
               <Link
                 className="flex items-center rounded text-white px-3 font-bold hover:text-green-600 hover:bg-white"
-                to="/bookings"
+                to="/my-bookings"
               >
                 Bookings
               </Link>
               <Link
                 className="flex items-center rounded text-white px-3 font-bold hover:text-green-600 hover:bg-white"
-                to="/appartments"
+                to="/my-appartments"
               >
                 Apartments
               </Link>

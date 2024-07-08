@@ -10,6 +10,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useAppContext } from "./contexts/AppContext";
 import AddAppartment from "./pages/AddAppartment";
+import Booking from "./pages/Booking";
+import AppartmentHotel from "./pages/EditAppartment";
+import MyAppartments from "./pages/MyAppartments";
+import MyBookings from "./pages/MyBookings";
+import Home from "./pages/Home";
+import Search from "./pages/Search";
+import Detail from "./pages/Detail";
 
 function App() {
   const { isLoggedIn } = useAppContext();
@@ -21,7 +28,7 @@ function App() {
           path="/"
           element={
             <Layout>
-              <p>Home Page</p>
+              <Home />
             </Layout>
           }
         />
@@ -29,7 +36,15 @@ function App() {
           path="/search"
           element={
             <Layout>
-              <p>Search Page</p>
+              <Search />
+            </Layout>
+          }
+        />
+        <Route
+          path="/detail/:appartmentId"
+          element={
+            <Layout>
+              <Detail />
             </Layout>
           }
         />
@@ -56,8 +71,7 @@ function App() {
               path="/appartment/:appartmentId/booking"
               element={
                 <Layout>
-                  {/* <Booking /> */}
-                  <div>booking</div>
+                  <Booking />
                 </Layout>
               }
             />
@@ -74,8 +88,7 @@ function App() {
               path="/edit-appartment/:appartmentId"
               element={
                 <Layout>
-                  {/* <EditHotel /> */}
-                  <div>edit hotel</div>
+                  <AppartmentHotel />
                 </Layout>
               }
             />
@@ -83,8 +96,7 @@ function App() {
               path="/my-appartments"
               element={
                 <Layout>
-                  {/* <MyHotels /> */}
-                  <div>my hotels</div>
+                  <MyAppartments />
                 </Layout>
               }
             />
@@ -92,8 +104,7 @@ function App() {
               path="/my-bookings"
               element={
                 <Layout>
-                  {/* <MyBookings /> */}
-                  <div>my bookings</div>
+                  <MyBookings />
                 </Layout>
               }
             />
@@ -102,6 +113,89 @@ function App() {
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
+    // <Router>
+    //   <Routes>
+    //     <Route
+    //       path="/"
+    //       element={
+    //         <Layout>
+    //           <Home />
+    //         </Layout>
+    //       }
+    //     />
+    //     <Route
+    //       path="/search"
+    //       element={
+    //         <Layout>
+    //           <Search />
+    //         </Layout>
+    //       }
+    //     />
+    //     <Route
+    //       path="/register"
+    //       element={
+    //         <Layout>
+    //           <Register />
+    //         </Layout>
+    //       }
+    //     />
+    //     <Route
+    //       path="/login"
+    //       element={
+    //         <Layout>
+    //           <Login />
+    //         </Layout>
+    //       }
+    //     />
+
+    //     {isLoggedIn && (
+    //       <>
+    //         <Route
+    //           path="/appartment/:appartmentId/booking"
+    //           element={
+    //             <Layout>
+    //               <Booking />
+    //             </Layout>
+    //           }
+    //         />
+
+    //         <Route
+    //           path="/add-appartment"
+    //           element={
+    //             <Layout>
+    //               <AddAppartment />
+    //             </Layout>
+    //           }
+    //         />
+    //         <Route
+    //           path="/edit-appartment/:appartmentId"
+    //           element={
+    //             <Layout>
+    //               <EditHotel />
+    //             </Layout>
+    //           }
+    //         />
+    //         <Route
+    //           path="/my-appartments"
+    //           element={
+    //             <Layout>
+    //               <MyHotels />
+    //             </Layout>
+    //           }
+    //         />
+    //         <Route
+    //           path="/my-bookings"
+    //           element={
+    //             <Layout>
+    //               <MyBookings />
+    //             </Layout>
+    //           }
+    //         />
+    //       </>
+    //     )}
+    //     <Route path="*" element={<Navigate to="/" />} />
+    //   </Routes>
+    // </Router>
   );
 }
 
